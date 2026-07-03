@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вход — IT Platform</title>
+  <link rel="stylesheet" href="/login.css">
+</head>
+<body>
+  <div class="login-wrap">
+    <section class="login-card">
+      <h1>IT Platform</h1>
+      <p class="login-sub">Вход в платформу</p>
+
+      <form id="loginForm">
+        <label for="email">Email</label>
+        <input id="email" type="email" required autocomplete="username" placeholder="sam@platform.local">
+
+        <label for="password">Пароль</label>
+        <input id="password" type="password" required autocomplete="current-password" placeholder="••••••••">
+
+        <p id="loginError" class="login-error" hidden></p>
+        <button type="submit" class="btn-primary">Войти</button>
+      </form>
+
+      <div class="demo-block">
+        <p class="demo-title">Демо-аккаунты (нажми, чтобы подставить)</p>
+        <div class="demo-buttons">
+          <button type="button" class="demo-btn" data-email="alex@platform.local" data-password="mentor123">Alex Mentor</button>
+          <button type="button" class="demo-btn" data-email="sam@platform.local" data-password="junior123">Sam Junior</button>
+          <button type="button" class="demo-btn" data-email="maria@platform.local" data-password="mentor123">Maria Mentor</button>
+          <button type="button" class="demo-btn" data-email="dana@platform.local" data-password="junior123">Dana Junior</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/auth.js"></script>
+  <script src="/login.js"></script>
+</body>
+</html>

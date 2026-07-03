@@ -1,0 +1,181 @@
+{
+  "info": {
+    "name": "IT Platform API",
+    "description": "Chat and GitHub PR sync — it-platform-1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "token", "value": "" },
+    { "key": "roomId", "value": "1" },
+    { "key": "messageId", "value": "1" },
+    { "key": "employeeId", "value": "2" },
+    { "key": "prId", "value": "1" },
+    { "key": "githubSecret", "value": "your-github-webhook-secret" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login (Alex Mentor)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data.token) pm.collectionVariables.set('token', data.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alex@platform.local\",\n  \"password\": \"mentor123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/login/"
+          }
+        },
+        {
+          "name": "Login (Sam Junior)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data.token) pm.collectionVariables.set('token', data.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"sam@platform.local\",\n  \"password\": \"junior123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/login/"
+          }
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/api/auth/me/"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Chat",
+      "item": [
+        {
+          "name": "GET /api/chat/rooms/",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/api/chat/rooms/"
+          }
+        },
+        {
+          "name": "GET /api/chat/rooms/{id}/messages/",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/chat/rooms/{{roomId}}/messages/?page=1&limit=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "chat", "rooms", "{{roomId}}", "messages", ""],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "20" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/chat/messages/{id}/read/",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/api/chat/messages/{{messageId}}/read/"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pull Requests",
+      "item": [
+        {
+          "name": "GET /api/employees/{id}/pull-requests/",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/api/employees/{{employeeId}}/pull-requests/"
+          }
+        },
+        {
+          "name": "POST /api/employees/{id}/pull-requests/",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"New feature\",\n  \"url\": \"https://github.com/org/repo/pull/99\",\n  \"status\": \"open\",\n  \"github_pr_id\": 99\n}"
+            },
+            "url": "{{baseUrl}}/api/employees/{{employeeId}}/pull-requests/"
+          }
+        },
+        {
+          "name": "PATCH /api/pull-requests/{id}/",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"merged\"\n}"
+            },
+            "url": "{{baseUrl}}/api/pull-requests/{{prId}}/"
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST /api/webhooks/github/",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-GitHub-Event", "value": "pull_request" },
+          { "key": "X-Hub-Signature-256", "value": "sha256=REPLACE_WITH_HMAC" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action\": \"opened\",\n  \"pull_request\": {\n    \"id\": 12345,\n    \"title\": \"Webhook test PR\",\n    \"html_url\": \"https://github.com/org/repo/pull/12345\",\n    \"merged\": false,\n    \"user\": { \"id\": 42 }\n  }\n}"
+        },
+        "url": "{{baseUrl}}/api/webhooks/github/",
+        "description": "HMAC SHA256 подпись тела запроса с GITHUB_WEBHOOK_SECRET"
+      }
+    }
+  ]
+}

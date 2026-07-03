@@ -1,0 +1,125 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: linear-gradient(160deg, #e8eef5 0%, #f7f9fc 50%, #eef2f7 100%);
+  color: #1a1a1a;
+  min-height: 100vh;
+}
+
+.login-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  border: 1px solid #dde3ea;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.login-card h1 {
+  margin: 0 0 6px;
+  font-size: 1.75rem;
+}
+
+.login-sub {
+  margin: 0 0 24px;
+  color: #5c6670;
+  font-size: 0.95rem;
+}
+
+#loginForm label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #333;
+}
+
+#loginForm input {
+  display: block;
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 10px 12px;
+  border: 1px solid #c8d0d8;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+#loginForm input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 11px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+.login-error {
+  margin: 0 0 12px;
+  color: #b91c1c;
+  font-size: 0.875rem;
+}
+
+.demo-block {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #e8edf2;
+}
+
+.demo-title {
+  margin: 0 0 12px;
+  font-size: 0.8rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.demo-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.demo-btn {
+  padding: 8px 10px;
+  border: 1px solid #d1d9e0;
+  border-radius: 8px;
+  background: #f8fafc;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.demo-btn:hover {
+  background: #eef5ff;
+  border-color: #93c5fd;
+}
+
+@media (max-width: 400px) {
+  .demo-buttons {
+    grid-template-columns: 1fr;
+  }
+}

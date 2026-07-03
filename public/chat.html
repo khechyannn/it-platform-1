@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat — IT Platform</title>
+  <link rel="stylesheet" href="/chat.css">
+</head>
+<body class="chat-page">
+  <header>
+    <h1>IT Platform Chat</h1>
+    <div class="user-bar">
+      <span id="currentUser"></span>
+      <button type="button" id="logoutBtn">Выйти</button>
+    </div>
+  </header>
+
+  <main>
+    <aside id="roomsPanel">
+      <h2>Комнаты</h2>
+      <ul id="roomsList"></ul>
+    </aside>
+
+    <section id="chatPanel">
+      <div id="chatHeader">
+        <span id="partnerName">Выберите комнату</span>
+        <span id="partnerStatus" class="status offline">офлайн</span>
+      </div>
+      <div id="typingIndicator"></div>
+      <div id="messages"></div>
+      <form id="messageForm">
+        <input id="messageInput" type="text" placeholder="Сообщение..." disabled>
+        <button type="submit" disabled>Отправить</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="/auth.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/chat.js"></script>
+</body>
+</html>
